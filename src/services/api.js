@@ -4,11 +4,24 @@ const api = axios.create({
   baseURL: 'http://localhost:3000',
 })
 
-api.interceptors.request.use(
-  (config) => {
-    return config
+api.interceptors.response.use(
+  response => {
+    return response
   },
-  (error) => Promise.reject(error)
-);
+  error => {
+    console.error('API call failed:', error)
+    // Handle specific error cases
+    if (error.response.status === 401) {
+      console.log('Unauthorized')
+    } else if (error.response.status === 422) {
+      // Not found
+      console.log('Unprocessable entity')
+    } else if (error.response.status === 404) {
+      // Not found
+      console.log('Page not found')
+    }
+    return Promise.reject(error)
+  }
+)
 
 export default api;
