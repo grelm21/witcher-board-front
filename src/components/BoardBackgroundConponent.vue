@@ -1,11 +1,13 @@
 <script setup>
-defineProps({
-  currentLocation: Object,
-})
+import { useLocationStore } from '@/stores/locationStore'
+import { computed } from 'vue'
+const locationStore = useLocationStore()
+const currentLocation = computed(() => locationStore.item)
+const locationError = computed(() => locationStore.error)
 </script>
 
 <template>
-    <Transition name="fade">
+  <Transition name="fade">
     <div class="bg-container velen" v-show="currentLocation?.code === 'velen'"></div>
   </Transition>
   <Transition name="fade">
@@ -17,9 +19,22 @@ defineProps({
   <Transition name="fade">
     <div class="bg-container novigrad" v-show="currentLocation?.code === 'novigrad'"></div>
   </Transition>
+  <Transition name="fade">
+    <div class="error" v-show="locationError">
+      <p>Error</p>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>
+.error {
+  display: flex;
+  background-image: url('../error_bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+}
 
 .bg-container {
   display: flex;
@@ -61,4 +76,13 @@ defineProps({
   background-size: 1000px 1000px;
 }
 
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>

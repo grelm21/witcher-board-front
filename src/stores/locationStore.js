@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
 import api from '@/services/api'
 
 export const useLocationStore = defineStore('locationStore', {
@@ -20,13 +19,15 @@ export const useLocationStore = defineStore('locationStore', {
       this.item = this.items[this.items.indexOf(this.item) - 1] || this.items[this.items.length - 1]
     },
     async fetchItems() {
-      console.log('fetchItems')
       this.isLoading = true
       this.error = null
       try {
         const response = await api.get('/locations')
         this.items = response.data
         this.item = this.items[0]
+        if (this.items.length === 0) {
+          this.error = 'No locations found'
+        }
       } catch (err) {
         this.error = err
       } finally {
