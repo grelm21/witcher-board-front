@@ -1,6 +1,7 @@
 <script setup>
 import { useLocationStore } from '@/stores/locationStore'
 import { computed } from 'vue'
+import ErrorComponent from '@/components/ErrorComponent.vue'
 const locationStore = useLocationStore()
 const currentLocation = computed(() => locationStore.item)
 const locationError = computed(() => locationStore.error)
@@ -21,7 +22,7 @@ const locationError = computed(() => locationStore.error)
   </Transition>
   <Transition name="fade">
     <div class="error" v-show="locationError">
-      <p>Error</p>
+      <ErrorComponent :error="locationError" />
     </div>
   </Transition>
 </template>
@@ -34,6 +35,8 @@ const locationError = computed(() => locationStore.error)
   background-size: cover;
   height: 100%;
   width: 100%;
+  items-align: center;
+  justify-content: center;
 }
 
 .bg-container {
