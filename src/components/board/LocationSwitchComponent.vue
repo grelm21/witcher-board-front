@@ -15,7 +15,7 @@ watch(isForward, () => {
     if (isForward.value) {
       isForward.value = false
     }
-  }, 1000)
+  }, 1100)
 })
 
 watch(isBack, () => {
@@ -23,7 +23,7 @@ watch(isBack, () => {
     if (isBack.value) {
       isBack.value = false
     }
-  }, 1000)
+  }, 1100)
 })
 
 watch(isBounce, () => {
@@ -31,7 +31,7 @@ watch(isBounce, () => {
     if (isBounce.value) {
       isBounce.value = false
     }
-  }, 400)
+  }, 1100)
 })
 </script>
 
@@ -39,8 +39,8 @@ watch(isBounce, () => {
   <div class="grid-container">
     <div class="location-select-sub">
       <div
-        class="location-button-forward"
-        @click="locationStore.prevLocation(), (isBack = true)"
+        :class="[`location-button-forward`, { button_disabled: isForward || isBack }]"
+        @click="(locationStore.prevLocation(), (isBack = true))"
         @mouseenter="isBounce = true"
       >
         <svg
@@ -61,10 +61,12 @@ watch(isBounce, () => {
         </svg>
       </div>
       <div class="location-select-shield">
-        <p :class="[{ bounce: isBounce }, { slide_fwd: isForward }, {slide_back: isBack}]">{{ currentLocation.name }}</p>
+        <p :class="[{ bounce: isBounce }, { slide_fwd: isForward }, { slide_back: isBack }]">
+          {{ currentLocation.name }}
+        </p>
       </div>
       <div
-        class="location-button-forward"
+        :class="[`location-button-forward`, { button_disabled: isForward || isBack }]"
         @click="(locationStore.nextLocation(), (isForward = true))"
         @mouseenter="isBounce = true"
       >
@@ -230,5 +232,10 @@ watch(isBounce, () => {
 
 .location-button-forward svg {
   pointer-events: none;
+}
+
+.button_disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }
 </style>
