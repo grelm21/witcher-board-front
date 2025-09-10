@@ -57,6 +57,12 @@ const errorText = () => {
     justify-content: center;
     align-items: center;
     white-space: pre-wrap;
+    background-image: linear-gradient(to bottom, #e0e7ef, #6b7a8f);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    font-weight: bold;
   }
 }
 

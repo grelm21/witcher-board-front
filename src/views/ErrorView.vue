@@ -13,13 +13,7 @@ const errorMessage = (route.query?.error || '404, страница не найд
 </template>
 
 <style scoped>
-.error-bg-container {
-  display: flex;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-}
+
 .error {
   display: flex;
   background-image: url('../error_bg.jpg');

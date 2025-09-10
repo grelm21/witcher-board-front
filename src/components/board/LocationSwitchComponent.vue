@@ -95,6 +95,7 @@ watch(isBounce, () => {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(12, 1fr);
+  z-index: 10;
 }
 
 .location-select-sub {

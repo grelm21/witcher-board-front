@@ -18,10 +18,16 @@ const currentLocation = computed(() => locationStore.item)
   <Transition name="fade">
     <div class="bg-container novigrad" v-show="currentLocation?.code === 'novigrad'"></div>
   </Transition>
-
 </template>
 
 <style scoped>
+.bg-container {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
 
 .velen {
   width: 100%;
