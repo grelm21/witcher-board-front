@@ -1,10 +1,11 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
+const route = useRoute()
 
 const props = defineProps({
   error: {
-    type: Object,
+    type: String,
   },
 })
 
@@ -13,18 +14,19 @@ function reloadPage() {
 }
 
 const errorText = () => {
-  const standardText = 'Дальше живут драконы.'
-  if (props.error) {
-    return standardText + props.error
+  let standardText = ''
+  if (route.name === 'ConnError' || route.name === '404') {
+    standardText = 'Дальше живут драконы.'
   } else {
-    return standardText + '\n404, страница не найдена.'
+    standardText = 'Никак вы все, бл***, не научитесь.'
   }
+  return standardText + '\n' + props.error
 }
 </script>
 
 <template>
   <div class="error-container" :data-text="errorText()">
-    <div class="reload-btn" @click="reloadPage()"/>
+    <div class="reload-btn" @click="reloadPage()" />
   </div>
 </template>
 

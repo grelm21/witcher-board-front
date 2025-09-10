@@ -1,10 +1,8 @@
 <script setup>
 import { useLocationStore } from '@/stores/locationStore'
 import { computed } from 'vue'
-import ErrorComponent from '@/components/ErrorComponent.vue'
 const locationStore = useLocationStore()
 const currentLocation = computed(() => locationStore.item)
-const locationError = computed(() => locationStore.error)
 </script>
 
 <template>

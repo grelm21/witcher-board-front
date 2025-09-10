@@ -1,10 +1,14 @@
 <script setup>
 import ErrorComponent from '@/components/ErrorComponent.vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+
+const errorMessage = (route.query?.error || '404, страница не найдена.')
 </script>
 
 <template>
   <div class="error-bg-container error">
-    <ErrorComponent />
+    <ErrorComponent :error="errorMessage" />
   </div>
 </template>
 
