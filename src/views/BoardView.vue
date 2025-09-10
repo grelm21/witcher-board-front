@@ -11,11 +11,12 @@ onMounted(async () => {
 })
 
 const isLoading = computed(() => locationStore.isLoading)
+const isError = computed(() => locationStore.error)
 </script>
 
 <template>
   <BoardBackgroundConponent />
-  <LocationSwitchComponent v-if="!isLoading" />
+  <LocationSwitchComponent v-if="!isLoading && !isError" />
 </template>
 
 <style scoped></style>
