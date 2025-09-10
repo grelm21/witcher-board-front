@@ -1,20 +1,32 @@
 <script setup>
-defineProps({
+import { useRouter, useRoute } from 'vue-router'
+const router = useRouter()
+const route = useRoute()
+
+const props = defineProps({
   error: {
-    type: Object,
+    type: String,
   },
 })
 
 function reloadPage() {
-  window.location.reload()
+  router.push('/')
 }
 
-const errorText = 'Дальше живут оши... драконы. Не надо туда идти'
+const errorText = () => {
+  let standardText = ''
+  if (route.name === 'ConnError' || route.name === '404') {
+    standardText = 'Дальше живут драконы.'
+  } else {
+    standardText = 'Никак вы все, бл***, не научитесь.'
+  }
+  return standardText + '\n' + props.error
+}
 </script>
 
 <template>
-  <div class="error-container" :data-text="`${errorText} ${error}`">
-    <div class="reload-btn" @click="reloadPage"/>
+  <div class="error-container" :data-text="errorText()">
+    <div class="reload-btn" @click="reloadPage()" />
   </div>
 </template>
 
@@ -27,28 +39,24 @@ const errorText = 'Дальше живут оши... драконы. Не над
   justify-content: center;
   height: 10%;
   width: 30%;
-  /* #635F5D */
-  /* #4B4B4A */
   background:
-    linear-gradient(to top, #635f5d, #d3d2d1) top/100% 3px no-repeat,
-    linear-gradient(to bottom, #635f5d, #d3d2d1) bottom/100% 3px no-repeat,
+    linear-gradient(to top, #635f5d, #d3d2d1) top/100% 5px no-repeat,
+    linear-gradient(to bottom, #635f5d, #d3d2d1) bottom/100% 5px no-repeat,
     linear-gradient(to left, #635f5d, #d3d2d1) left/5px 100% no-repeat,
-    linear-gradient(to right, #635f5d, #d3d2d1) right/5px 100% no-repeat,
-    #635f5d; /* основной фон */
-  border: 2px solid #635f5d;
-
+    linear-gradient(to right, #635f5d, #d3d2d1) right/5px 100% no-repeat;
   margin: auto;
 
   &::after {
     content: attr(data-text);
     display: flex;
-    width: 81%;
-    height: 70%;
+    width: 82%;
+    height: 73%;
     background-color: #e2e2e2;
     font-size: 20px;
     padding: 10px 50px;
     justify-content: center;
     align-items: center;
+    white-space: pre-wrap;
   }
 }
 
@@ -65,9 +73,7 @@ const errorText = 'Дальше живут оши... драконы. Не над
     linear-gradient(to top, #635f5d, #d3d2d1) top/100% 3px no-repeat,
     linear-gradient(to bottom, #635f5d, #d3d2d1) bottom/100% 3px no-repeat,
     linear-gradient(to left, #635f5d, #d3d2d1) left/3px 100% no-repeat,
-    linear-gradient(to right, #635f5d, #d3d2d1) right/3px 100% no-repeat,
-    #635f5d; /* основной фон */
-  border: 2px solid #635f5d;
+    linear-gradient(to right, #635f5d, #d3d2d1) right/3px 100% no-repeat;
   cursor: pointer;
 
   &::after {
@@ -80,9 +86,9 @@ const errorText = 'Дальше живут оши... драконы. Не над
     background-repeat: no-repeat;
     background-position: center;
     background-size: 60%;
-    pointer-events: none;
     z-index: 50;
   }
+
   &:hover::after {
     background-color: #635f5d;
     pointer-events: none;

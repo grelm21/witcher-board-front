@@ -1,4 +1,5 @@
 import axios from "axios";
+import router from "@/router";
 
 const api = axios.create({
 	baseURL: "http://localhost:3000",
@@ -12,7 +13,8 @@ api.interceptors.response.use(
 		console.error("API call failed:", error);
 
 		if (error.message === "Network Error" || error.code === "ERR_NETWORK") {
-		  console.log("Network Error");
+			console.log("Network Error");
+			router.push({name: "ConnError", query: { error: `${error.message} ${error.code}` }});
 		} else if (error.response.status === 401) {
 			console.log("Unauthorized");
 		} else if (error.response.status === 422) {

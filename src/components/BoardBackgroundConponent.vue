@@ -1,10 +1,8 @@
 <script setup>
 import { useLocationStore } from '@/stores/locationStore'
 import { computed } from 'vue'
-import ErrorComponent from '@/components/ErrorComponent.vue'
 const locationStore = useLocationStore()
 const currentLocation = computed(() => locationStore.item)
-const locationError = computed(() => locationStore.error)
 </script>
 
 <template>
@@ -20,32 +18,10 @@ const locationError = computed(() => locationStore.error)
   <Transition name="fade">
     <div class="bg-container novigrad" v-show="currentLocation?.code === 'novigrad'"></div>
   </Transition>
-  <Transition name="fade">
-    <div class="error" v-show="locationError">
-      <ErrorComponent :error="locationError" />
-    </div>
-  </Transition>
+
 </template>
 
 <style scoped>
-.error {
-  display: flex;
-  background-image: url('../error_bg.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
-  width: 100%;
-  items-align: center;
-  justify-content: center;
-}
-
-.bg-container {
-  display: flex;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
 
 .velen {
   width: 100%;
